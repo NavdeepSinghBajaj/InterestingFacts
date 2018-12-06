@@ -20,6 +20,7 @@
 		F139C6D521B9692B0037C4DD /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139C6D421B9692B0037C4DD /* DataModel.swift */; };
 		F139C6D821B96EE90037C4DD /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139C6D721B96EE90037C4DD /* UIViewControllerExtensions.swift */; };
 		F139C6DA21B97B100037C4DD /* HomeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139C6D921B97B100037C4DD /* HomeCollectionViewController.swift */; };
+		F139C6DD21B9A13C0037C4DD /* FactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139C6DC21B9A13C0037C4DD /* FactCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		F139C6D421B9692B0037C4DD /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		F139C6D721B96EE90037C4DD /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
 		F139C6D921B97B100037C4DD /* HomeCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewController.swift; sourceTree = "<group>"; };
+		F139C6DC21B9A13C0037C4DD /* FactCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactCollectionViewCell.swift; sourceTree = "<group>"; };
 		F53F78C71B0C6A05179F74D7 /* Pods-InterestingFactsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InterestingFactsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InterestingFactsTests/Pods-InterestingFactsTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -150,6 +152,7 @@
 		F139C6C321B964990037C4DD /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F139C6DB21B9A1170037C4DD /* Custom */,
 				F139C6D121B965FC0037C4DD /* Storyboards */,
 			);
 			path = View;
@@ -229,6 +232,14 @@
 				F139C6D721B96EE90037C4DD /* UIViewControllerExtensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F139C6DB21B9A1170037C4DD /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				F139C6DC21B9A13C0037C4DD /* FactCollectionViewCell.swift */,
+			);
+			path = Custom;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -404,6 +415,7 @@
 				F139C6A321B957780037C4DD /* AppDelegate.swift in Sources */,
 				F139C6DA21B97B100037C4DD /* HomeCollectionViewController.swift in Sources */,
 				F139C6C721B964D70037C4DD /* Constants.swift in Sources */,
+				F139C6DD21B9A13C0037C4DD /* FactCollectionViewCell.swift in Sources */,
 				F139C6CB21B964FF0037C4DD /* Helper.swift in Sources */,
 				F139C6D521B9692B0037C4DD /* DataModel.swift in Sources */,
 				F139C6D821B96EE90037C4DD /* UIViewControllerExtensions.swift in Sources */,

@@ -14,4 +14,8 @@ struct Constants {
         static let factCell = "FactCollectionViewCell"
     }
     
+    struct Image {
+        static let placeHolderImage = "placeholder"
+    }
+    
 }
