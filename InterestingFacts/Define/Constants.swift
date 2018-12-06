@@ -10,4 +10,8 @@ import Foundation
 
 struct Constants {
     
+    struct CollectionViewCell {
+        static let factCell = "FactCollectionViewCell"
+    }
+    
 }
