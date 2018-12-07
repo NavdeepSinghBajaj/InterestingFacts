@@ -7,10 +7,9 @@ target 'InterestingFacts' do
   # Pods for InterestingFacts
 
     pod 'Alamofire', '~> 4.7'
-    pod 'SwiftyJSON', '~> 4.0'
-    pod 'ReachabilitySwift'
     pod 'SVProgressHUD'
     pod 'SnapKit', '~> 4.0.0'
+    pod 'SDWebImage', '~> 4.0'
 
   target 'InterestingFactsTests' do
     inherit! :search_paths

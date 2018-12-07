@@ -17,10 +17,11 @@
 		F139C6C721B964D70037C4DD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139C6C621B964D70037C4DD /* Constants.swift */; };
 		F139C6CB21B964FF0037C4DD /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139C6CA21B964FF0037C4DD /* Helper.swift */; };
 		F139C6CE21B965190037C4DD /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139C6CD21B965190037C4DD /* Utils.swift */; };
-		F139C6D521B9692B0037C4DD /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139C6D421B9692B0037C4DD /* DataModel.swift */; };
 		F139C6D821B96EE90037C4DD /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139C6D721B96EE90037C4DD /* UIViewControllerExtensions.swift */; };
 		F139C6DA21B97B100037C4DD /* HomeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139C6D921B97B100037C4DD /* HomeCollectionViewController.swift */; };
 		F139C6DD21B9A13C0037C4DD /* FactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139C6DC21B9A13C0037C4DD /* FactCollectionViewCell.swift */; };
+		F139C6E021B9C5630037C4DD /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139C6DF21B9C5630037C4DD /* APIClient.swift */; };
+		F139C6E421BA478B0037C4DD /* Fact.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139C6E321BA478B0037C4DD /* Fact.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,10 +52,11 @@
 		F139C6C621B964D70037C4DD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F139C6CA21B964FF0037C4DD /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		F139C6CD21B965190037C4DD /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		F139C6D421B9692B0037C4DD /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		F139C6D721B96EE90037C4DD /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
 		F139C6D921B97B100037C4DD /* HomeCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewController.swift; sourceTree = "<group>"; };
 		F139C6DC21B9A13C0037C4DD /* FactCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactCollectionViewCell.swift; sourceTree = "<group>"; };
+		F139C6DF21B9C5630037C4DD /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		F139C6E321BA478B0037C4DD /* Fact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fact.swift; sourceTree = "<group>"; };
 		F53F78C71B0C6A05179F74D7 /* Pods-InterestingFactsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InterestingFactsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InterestingFactsTests/Pods-InterestingFactsTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -121,6 +123,7 @@
 		F139C6A121B957780037C4DD /* InterestingFacts */ = {
 			isa = PBXGroup;
 			children = (
+				F139C6DE21B9C2350037C4DD /* APIClient */,
 				F139C6D321B9676C0037C4DD /* SupportFiles */,
 				F139C6D021B965E40037C4DD /* Resources */,
 				F139C6C821B964EB0037C4DD /* Library */,
@@ -144,7 +147,7 @@
 		F139C6C221B964900037C4DD /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				F139C6D421B9692B0037C4DD /* DataModel.swift */,
+				F139C6E321BA478B0037C4DD /* Fact.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -240,6 +243,14 @@
 				F139C6DC21B9A13C0037C4DD /* FactCollectionViewCell.swift */,
 			);
 			path = Custom;
+			sourceTree = "<group>";
+		};
+		F139C6DE21B9C2350037C4DD /* APIClient */ = {
+			isa = PBXGroup;
+			children = (
+				F139C6DF21B9C5630037C4DD /* APIClient.swift */,
+			);
+			path = APIClient;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -350,18 +361,16 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-InterestingFacts/Pods-InterestingFacts-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -413,12 +422,13 @@
 			files = (
 				F139C6CE21B965190037C4DD /* Utils.swift in Sources */,
 				F139C6A321B957780037C4DD /* AppDelegate.swift in Sources */,
+				F139C6E421BA478B0037C4DD /* Fact.swift in Sources */,
 				F139C6DA21B97B100037C4DD /* HomeCollectionViewController.swift in Sources */,
 				F139C6C721B964D70037C4DD /* Constants.swift in Sources */,
 				F139C6DD21B9A13C0037C4DD /* FactCollectionViewCell.swift in Sources */,
 				F139C6CB21B964FF0037C4DD /* Helper.swift in Sources */,
-				F139C6D521B9692B0037C4DD /* DataModel.swift in Sources */,
 				F139C6D821B96EE90037C4DD /* UIViewControllerExtensions.swift in Sources */,
+				F139C6E021B9C5630037C4DD /* APIClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -585,10 +595,7 @@
 				DEVELOPMENT_TEAM = 55M2G7N6TF;
 				INFOPLIST_FILE = "$(SRCROOT)/InterestingFacts/SupportFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.navdeep.InterestingFacts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -605,10 +612,7 @@
 				DEVELOPMENT_TEAM = 55M2G7N6TF;
 				INFOPLIST_FILE = "$(SRCROOT)/InterestingFacts/SupportFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.navdeep.InterestingFacts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -625,11 +629,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 55M2G7N6TF;
 				INFOPLIST_FILE = InterestingFactsTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.navdeep.InterestingFactsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -647,11 +647,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 55M2G7N6TF;
 				INFOPLIST_FILE = InterestingFactsTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.navdeep.InterestingFactsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;

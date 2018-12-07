@@ -53,3 +53,11 @@ func getMainStoryboard() -> UIStoryboard {
     let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
     return storyBoard
 }
+
+
+// MARK: -
+func getSavedJsonURL() -> URL {
+    var documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    documentsURL.appendPathComponent(Constants.FileName.factsJSON)
+    return documentsURL
+}

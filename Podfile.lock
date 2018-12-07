@@ -1,32 +1,30 @@
 PODS:
   - Alamofire (4.8.0)
-  - ReachabilitySwift (4.3.0)
+  - SDWebImage (4.4.2):
+    - SDWebImage/Core (= 4.4.2)
+  - SDWebImage/Core (4.4.2)
   - SnapKit (4.0.1)
   - SVProgressHUD (2.2.5)
-  - SwiftyJSON (4.2.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.7)
-  - ReachabilitySwift
+  - SDWebImage (~> 4.0)
   - SnapKit (~> 4.0.0)
   - SVProgressHUD
-  - SwiftyJSON (~> 4.0)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Alamofire
-    - ReachabilitySwift
+    - SDWebImage
     - SnapKit
     - SVProgressHUD
-    - SwiftyJSON
 
 SPEC CHECKSUMS:
   Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
-  ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
+  SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
-  SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
 
-PODFILE CHECKSUM: f00c14437baeed119d6d7c62ae3ad32a2947ab83
+PODFILE CHECKSUM: caf9cab5316e999b3fe80daeae51633514914939
 
 COCOAPODS: 1.5.0

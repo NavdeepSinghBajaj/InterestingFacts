@@ -40,6 +40,7 @@ class FactCollectionViewCell: UICollectionViewCell {
         let factImageView = UIImageView()
         factImageView.translatesAutoresizingMaskIntoConstraints = false
         factImageView.image = UIImage(named: Constants.Image.placeHolderImage)
+        factImageView.contentMode = .scaleAspectFit
         return factImageView
     }()
     
@@ -47,7 +48,7 @@ class FactCollectionViewCell: UICollectionViewCell {
         let verticalStackView = UIStackView()
         verticalStackView.axis  = .vertical
         verticalStackView.distribution  = .fillProportionally
-        verticalStackView.alignment = .fill
+        verticalStackView.alignment = .top
         verticalStackView.spacing   = 10.0
         return verticalStackView
     }()
@@ -80,7 +81,7 @@ class FactCollectionViewCell: UICollectionViewCell {
         factImageView.snp.makeConstraints { (make) in
             make.top.equalTo(contentView).offset(10)
             make.left.equalTo(contentView).offset(10)
-            make.bottom.equalTo(contentView).offset(-10).priority(.high)
+            make.bottom.equalTo(contentView).offset(-10).priority(.medium)
             make.height.equalTo(100)
             make.width.equalTo(100)
         }
@@ -102,6 +103,30 @@ class FactCollectionViewCell: UICollectionViewCell {
             make.right.equalTo(contentView).offset(-10)
         }
         
+    }
+    
+    
+    func loadCell( with fact:Fact) {
+        if let title = fact.title {
+            self.lblTitle.text = title
+        } else {
+            self.lblTitle.text = "NA"
+        }
+        
+        if let details = fact.detail {
+            self.lblDescription.text = details
+        } else {
+            self.lblDescription.text = "NA"
+        }
+        
+        if let imageUrl = fact.imageURL {
+            self.factImageView.sd_setImage(with: imageUrl, placeholderImage:UIImage(named: Constants.Image.placeHolderImage))
+        } else {
+            self.factImageView.image = UIImage(named: Constants.Image.placeHolderImage)
+        }
+        
+        self.layoutSubviews()
+        self.layoutIfNeeded()
     }
     
 }

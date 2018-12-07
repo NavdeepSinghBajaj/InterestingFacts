@@ -7,26 +7,25 @@
 //
 
 import UIKit
+import SDWebImage
 
 class HomeCollectionViewController: UICollectionViewController {
     // MARK:-
     let estimatedCellHeight:CGFloat = 10
     var layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-    
+    var interestingFacts: InterestingFacts? = loadFactsJson()
     
     // MARK:-
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+        showProgressView()
+        setupLayout()
+        setupCollectionView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        setupLayout()
-        setupCollectionView()
     }
     
     
@@ -54,22 +53,40 @@ class HomeCollectionViewController: UICollectionViewController {
         collectionView?.dataSource = self
         collectionView?.register(FactCollectionViewCell.self, forCellWithReuseIdentifier: Constants.CollectionViewCell.factCell)
         collectionView?.collectionViewLayout = layout
+        
+        if interestingFacts != nil {
+            collectionView.reloadData()
+        }
+        hideProgressView()
     }
     
+    @IBAction func refresh(_ sender: Any) {
+        
+        if APIClient.isConnectedToInternet() {
+            showProgressView()
+            APIClient.getFactsJSON { (status, result) in
+                hideProgressView()
+            }
+        } else {
+            showSuccess(Constants.Messages.noInternet)
+        }
+        
+    }
     
     // MARK: - UICollectionViewDataSource
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return interestingFacts?.facts.count ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.CollectionViewCell.factCell, for: indexPath) as! FactCollectionViewCell
         
-        cell.lblTitle.text = "Lorem ipsum"
         
-        cell.lblDescription.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        if let fact = interestingFacts?.facts[indexPath.row] {
+            cell.loadCell(with: fact)
+        }
         
         return cell
     }
