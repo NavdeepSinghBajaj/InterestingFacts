@@ -31,17 +31,24 @@ struct Fact: Decodable {
     }
 }
 
-func loadFactsJson() -> InterestingFacts? {
-    if let data = Constants.Facts.jsonString.data(using: .utf8) {
-        let decoder = JSONDecoder()
-        guard let jsonData = try? decoder.decode(InterestingFacts.self, from: data) else {
-            print("Error: Couldn't decode data")
-            return nil
+func loadLocalJson() -> InterestingFacts? {
+    if let url = Bundle.main.url(forResource: "facts_sample", withExtension: "json") {
+        do {
+            let data = try Data(contentsOf: url)
+            let decoder = JSONDecoder()
+            
+            if let jsonData = try? decoder.decode(InterestingFacts.self, from: data) {
+                return jsonData
+            } else {
+                print("Error: Couldn't decode data because json is curropted")
+            }
+        } catch {
+            print("error:\(error)")
         }
-        return jsonData
     }
     return nil
 }
+
 
 func loadFactsJson(from url: URL?) -> InterestingFacts? {
     if let url = url {
@@ -60,6 +67,4 @@ func loadFactsJson(from url: URL?) -> InterestingFacts? {
         }
     }
     return nil
-    // returning data from saved json string, because of curropted json provided
-    //return loadFactsJson()
 }

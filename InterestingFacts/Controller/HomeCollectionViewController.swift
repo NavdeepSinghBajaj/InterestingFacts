@@ -16,6 +16,9 @@ class HomeCollectionViewController: UICollectionViewController {
     var interestingFacts: InterestingFacts? {
         didSet {
             collectionView.reloadData()
+            collectionView.setNeedsLayout()
+            collectionView.layoutIfNeeded()
+            collectionView.collectionViewLayout.invalidateLayout()
         }
     }
     
@@ -61,6 +64,9 @@ class HomeCollectionViewController: UICollectionViewController {
         
         if interestingFacts != nil {
             collectionView.reloadData()
+            collectionView.setNeedsLayout()
+            collectionView.layoutIfNeeded()
+            collectionView.collectionViewLayout.invalidateLayout()
         }
     }
     
@@ -80,12 +86,17 @@ class HomeCollectionViewController: UICollectionViewController {
                         self?.title = self?.interestingFacts?.title
                     } else {
                         // no data
-                        self?.alert(error: Constants.Messages.somethingWentWrong)
+                        self?.alert(message: Constants.Message.somethingWentWrong, buttons: [Constants.Button.showLocalData, Constants.Button.ok], handler: { (action) in
+                            if action.title == Constants.Button.showLocalData {
+                                self?.interestingFacts =  loadLocalJson() 
+                                self?.title = self?.interestingFacts?.title
+                            }
+                        })
                     }
                 }
             }
         } else {
-            self.alert(error: Constants.Messages.noInternet)
+            self.alert(error: Constants.Message.noInternet)
         }
     }
     
@@ -102,8 +113,10 @@ class HomeCollectionViewController: UICollectionViewController {
         if let fact = interestingFacts?.facts[indexPath.row] {
             cell.loadCell(with: fact)
         }
+        
         cell.layoutIfNeeded()
         cell.layoutSubviews()
+        
         return cell
     }
     

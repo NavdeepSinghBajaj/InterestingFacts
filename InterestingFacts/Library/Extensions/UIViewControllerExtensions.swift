@@ -22,7 +22,7 @@ extension UIViewController {
     func alert(title: String? = nil, message: String, buttons: [String], handler: ((UIAlertAction) -> Void)?) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         for button in buttons {
-            let action = UIAlertAction(title: button, style: .cancel, handler: { action in
+            let action = UIAlertAction(title: button, style: .default, handler: { action in
                 handler?(action)
             })
             alert.addAction(action)

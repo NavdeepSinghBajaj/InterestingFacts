@@ -22,6 +22,7 @@
 		F139C6DD21B9A13C0037C4DD /* FactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139C6DC21B9A13C0037C4DD /* FactCollectionViewCell.swift */; };
 		F139C6E021B9C5630037C4DD /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139C6DF21B9C5630037C4DD /* APIClient.swift */; };
 		F139C6E421BA478B0037C4DD /* Fact.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139C6E321BA478B0037C4DD /* Fact.swift */; };
+		F139C6E621BAB3FF0037C4DD /* facts_sample.json in Resources */ = {isa = PBXBuildFile; fileRef = F139C6E521BAB3FF0037C4DD /* facts_sample.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		F139C6DC21B9A13C0037C4DD /* FactCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactCollectionViewCell.swift; sourceTree = "<group>"; };
 		F139C6DF21B9C5630037C4DD /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		F139C6E321BA478B0037C4DD /* Fact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fact.swift; sourceTree = "<group>"; };
+		F139C6E521BAB3FF0037C4DD /* facts_sample.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = facts_sample.json; sourceTree = "<group>"; };
 		F53F78C71B0C6A05179F74D7 /* Pods-InterestingFactsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InterestingFactsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InterestingFactsTests/Pods-InterestingFactsTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -206,6 +208,7 @@
 		F139C6D021B965E40037C4DD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F139C6E521BAB3FF0037C4DD /* facts_sample.json */,
 				F139C6A921B957880037C4DD /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -340,6 +343,7 @@
 				F139C6AD21B957890037C4DD /* LaunchScreen.storyboard in Resources */,
 				F139C6AA21B957880037C4DD /* Assets.xcassets in Resources */,
 				F139C6A821B957780037C4DD /* Main.storyboard in Resources */,
+				F139C6E621BAB3FF0037C4DD /* facts_sample.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -595,7 +599,10 @@
 				DEVELOPMENT_TEAM = 55M2G7N6TF;
 				INFOPLIST_FILE = "$(SRCROOT)/InterestingFacts/SupportFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.navdeep.InterestingFacts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -612,7 +619,10 @@
 				DEVELOPMENT_TEAM = 55M2G7N6TF;
 				INFOPLIST_FILE = "$(SRCROOT)/InterestingFacts/SupportFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.navdeep.InterestingFacts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -629,7 +639,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 55M2G7N6TF;
 				INFOPLIST_FILE = InterestingFactsTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.navdeep.InterestingFactsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -647,7 +661,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 55M2G7N6TF;
 				INFOPLIST_FILE = InterestingFactsTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.navdeep.InterestingFactsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
