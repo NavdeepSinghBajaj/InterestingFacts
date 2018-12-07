@@ -59,6 +59,7 @@ func loadFactsJson(from url: URL?) -> InterestingFacts? {
             print("error:\(error)")
         }
     }
+    return nil
     // returning data from saved json string, because of curropted json provided
-    return loadFactsJson()
+    //return loadFactsJson()
 }

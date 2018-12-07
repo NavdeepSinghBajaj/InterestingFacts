@@ -13,13 +13,17 @@ class HomeCollectionViewController: UICollectionViewController {
     // MARK:-
     let estimatedCellHeight:CGFloat = 10
     var layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-    var interestingFacts: InterestingFacts? = loadFactsJson()
+    var interestingFacts: InterestingFacts? {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     // MARK:-
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        showProgressView()
+        fetchFactsFromServer()
         setupLayout()
         setupCollectionView()
     }
@@ -31,6 +35,7 @@ class HomeCollectionViewController: UICollectionViewController {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         layout.estimatedItemSize = CGSize(width: view.bounds.size.width, height: estimatedCellHeight)
+        layout.invalidateLayout()
         super.traitCollectionDidChange(previousTraitCollection)
     }
     
@@ -57,20 +62,31 @@ class HomeCollectionViewController: UICollectionViewController {
         if interestingFacts != nil {
             collectionView.reloadData()
         }
-        hideProgressView()
     }
     
     @IBAction func refresh(_ sender: Any) {
-        
+        fetchFactsFromServer()
+    }
+    
+    func fetchFactsFromServer() {
         if APIClient.isConnectedToInternet() {
             showProgressView()
-            APIClient.getFactsJSON { (status, result) in
-                hideProgressView()
+            DispatchQueue.global().async {
+                APIClient.getFactsJSON {[weak self] (status, result) in
+                    hideProgressView()
+                    if status {
+                       // got data
+                        self?.interestingFacts = result
+                        self?.title = self?.interestingFacts?.title
+                    } else {
+                        // no data
+                        self?.alert(error: Constants.Messages.somethingWentWrong)
+                    }
+                }
             }
         } else {
-            showSuccess(Constants.Messages.noInternet)
+            self.alert(error: Constants.Messages.noInternet)
         }
-        
     }
     
     // MARK: - UICollectionViewDataSource
@@ -83,11 +99,11 @@ class HomeCollectionViewController: UICollectionViewController {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.CollectionViewCell.factCell, for: indexPath) as! FactCollectionViewCell
         
-        
         if let fact = interestingFacts?.facts[indexPath.row] {
             cell.loadCell(with: fact)
         }
-        
+        cell.layoutIfNeeded()
+        cell.layoutSubviews()
         return cell
     }
     

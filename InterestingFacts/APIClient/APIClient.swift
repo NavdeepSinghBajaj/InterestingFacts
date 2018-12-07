@@ -36,16 +36,17 @@ class APIClient {
     static func getFactsJSON(completion: @escaping ((Bool, InterestingFacts?) -> Void)) {
         if let fileURL = try? Constants.FileServer.fileURL.asURL() {
             performDownload(for: fileURL, filename: Constants.FileName.factsJSON) { (status, destinationFileURL) in
-
                 if status {
-                    if let interesting = loadFactsJson(from: destinationFileURL) {
-                        print(interesting)
+                    if let interestingFacts = loadFactsJson(from: destinationFileURL) {
+                        print(interestingFacts)
+                        completion(true,interestingFacts)
+                    } else {
+                        completion(false,nil)
                     }
                 } else {
-                    
+                    completion(false,nil)
                 }
-
-                completion(status,nil)
+                
             }
         }
     }

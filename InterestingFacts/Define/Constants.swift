@@ -26,8 +26,11 @@ struct Constants {
         static let placeHolderImage = "placeholder"
     }
     
+    
     struct Messages {
         static let noInternet = "Internet not available, please try again later."
+        static let noData = "No Data"
+        static let somethingWentWrong = "Something went wrong while fetching data from server. Please try again."
     }
     
     struct Facts {

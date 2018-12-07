@@ -30,7 +30,7 @@ class FactCollectionViewCell: UICollectionViewCell {
     let lblDescription: UILabel = {
         let lblDescription = UILabel()
         lblDescription.font = UIFont.systemFont(ofSize: 12)
-        lblDescription.textColor = .gray
+        lblDescription.textColor = .darkGray
         lblDescription.numberOfLines = 0
         lblDescription.translatesAutoresizingMaskIntoConstraints = false
         return lblDescription
@@ -39,7 +39,7 @@ class FactCollectionViewCell: UICollectionViewCell {
     let factImageView: UIImageView = {
         let factImageView = UIImageView()
         factImageView.translatesAutoresizingMaskIntoConstraints = false
-        factImageView.image = UIImage(named: Constants.Image.placeHolderImage)
+        //factImageView.image = UIImage(named: Constants.Image.placeHolderImage)
         factImageView.contentMode = .scaleAspectFit
         return factImageView
     }()
@@ -59,7 +59,6 @@ class FactCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.translatesAutoresizingMaskIntoConstraints = false
-        //contentView.backgroundColor = .red
         setupViews()
     }
     
@@ -79,11 +78,18 @@ class FactCollectionViewCell: UICollectionViewCell {
         // adding fact image
         contentView.addSubview(factImageView)
         factImageView.snp.makeConstraints { (make) in
-            make.top.equalTo(contentView).offset(10)
-            make.left.equalTo(contentView).offset(10)
-            make.bottom.equalTo(contentView).offset(-10).priority(.medium)
-            make.height.equalTo(100)
-            make.width.equalTo(100)
+            if #available(iOS 11.0, *) {
+                make.top.equalTo(contentView.safeAreaLayoutGuide).offset(10)
+                make.left.equalTo(contentView.safeAreaLayoutGuide).offset(10)
+                make.height.equalTo(100)
+                make.width.equalTo(100)
+            } else {
+                make.top.equalTo(contentView).offset(10)
+                make.left.equalTo(contentView).offset(10)
+                make.height.equalTo(100)
+                make.width.equalTo(100)
+            }
+            
         }
         
         // Vertical Stack View
@@ -97,26 +103,36 @@ class FactCollectionViewCell: UICollectionViewCell {
         verticalStackView.addArrangedSubview(lblDescription)
         
         verticalStackView.snp.makeConstraints { (make) in
-            make.top.equalTo(contentView).offset(10)
-            make.left.equalTo(factImageView.snp.right).offset(10)
-            make.bottom.equalTo(contentView).offset(-10).priority(.medium)
-            make.right.equalTo(contentView).offset(-10)
+            if #available(iOS 11.0, *) {
+                make.top.equalTo(contentView.safeAreaLayoutGuide).offset(10)
+                make.left.equalTo(factImageView.snp.right).offset(10)
+                make.height.greaterThanOrEqualTo(factImageView)
+                make.bottom.equalTo(contentView.safeAreaLayoutGuide).offset(-10)//.priority(.high)
+                make.right.equalTo(contentView.safeAreaLayoutGuide).offset(-10)
+            } else {
+                make.top.equalTo(contentView).offset(10)
+                make.left.equalTo(factImageView.snp.right).offset(10)
+                make.height.greaterThanOrEqualTo(factImageView)
+                make.bottom.equalTo(contentView).offset(-10)//.priority(.high)
+                make.right.equalTo(contentView).offset(-10)
+            }
         }
-        
     }
+    
+    
     
     
     func loadCell( with fact:Fact) {
         if let title = fact.title {
             self.lblTitle.text = title
         } else {
-            self.lblTitle.text = "NA"
+            self.lblTitle.text = Constants.Messages.noData
         }
         
         if let details = fact.detail {
             self.lblDescription.text = details
         } else {
-            self.lblDescription.text = "NA"
+            self.lblDescription.text = Constants.Messages.noData
         }
         
         if let imageUrl = fact.imageURL {
@@ -125,8 +141,6 @@ class FactCollectionViewCell: UICollectionViewCell {
             self.factImageView.image = UIImage(named: Constants.Image.placeHolderImage)
         }
         
-        self.layoutSubviews()
-        self.layoutIfNeeded()
     }
     
 }
