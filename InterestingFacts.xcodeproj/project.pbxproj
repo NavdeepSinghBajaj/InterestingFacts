@@ -16,7 +16,6 @@
 		F139C6B821B9578A0037C4DD /* InterestingFactsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139C6B721B9578A0037C4DD /* InterestingFactsTests.swift */; };
 		F139C6C721B964D70037C4DD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139C6C621B964D70037C4DD /* Constants.swift */; };
 		F139C6CB21B964FF0037C4DD /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139C6CA21B964FF0037C4DD /* Helper.swift */; };
-		F139C6CE21B965190037C4DD /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139C6CD21B965190037C4DD /* Utils.swift */; };
 		F139C6D821B96EE90037C4DD /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139C6D721B96EE90037C4DD /* UIViewControllerExtensions.swift */; };
 		F139C6DA21B97B100037C4DD /* HomeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139C6D921B97B100037C4DD /* HomeCollectionViewController.swift */; };
 		F139C6DD21B9A13C0037C4DD /* FactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139C6DC21B9A13C0037C4DD /* FactCollectionViewCell.swift */; };
@@ -52,7 +51,6 @@
 		F139C6B921B9578A0037C4DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F139C6C621B964D70037C4DD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F139C6CA21B964FF0037C4DD /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
-		F139C6CD21B965190037C4DD /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		F139C6D721B96EE90037C4DD /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
 		F139C6D921B97B100037C4DD /* HomeCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewController.swift; sourceTree = "<group>"; };
 		F139C6DC21B9A13C0037C4DD /* FactCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -183,7 +181,6 @@
 			isa = PBXGroup;
 			children = (
 				F139C6D621B96E550037C4DD /* Extensions */,
-				F139C6CC21B965080037C4DD /* Utils */,
 				F139C6C921B964F20037C4DD /* Helper */,
 			);
 			path = Library;
@@ -195,14 +192,6 @@
 				F139C6CA21B964FF0037C4DD /* Helper.swift */,
 			);
 			path = Helper;
-			sourceTree = "<group>";
-		};
-		F139C6CC21B965080037C4DD /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				F139C6CD21B965190037C4DD /* Utils.swift */,
-			);
-			path = Utils;
 			sourceTree = "<group>";
 		};
 		F139C6D021B965E40037C4DD /* Resources */ = {
@@ -424,7 +413,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F139C6CE21B965190037C4DD /* Utils.swift in Sources */,
 				F139C6A321B957780037C4DD /* AppDelegate.swift in Sources */,
 				F139C6E421BA478B0037C4DD /* Fact.swift in Sources */,
 				F139C6DA21B97B100037C4DD /* HomeCollectionViewController.swift in Sources */,

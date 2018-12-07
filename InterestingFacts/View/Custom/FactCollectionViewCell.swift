@@ -39,7 +39,6 @@ class FactCollectionViewCell: UICollectionViewCell {
     let factImageView: UIImageView = {
         let factImageView = UIImageView()
         factImageView.translatesAutoresizingMaskIntoConstraints = false
-        //factImageView.image = UIImage(named: Constants.Image.placeHolderImage)
         factImageView.contentMode = .scaleAspectFit
         return factImageView
     }()
@@ -89,7 +88,6 @@ class FactCollectionViewCell: UICollectionViewCell {
                 make.height.equalTo(100)
                 make.width.equalTo(100)
             }
-            
         }
         
         // Vertical Stack View
@@ -107,20 +105,17 @@ class FactCollectionViewCell: UICollectionViewCell {
                 make.top.equalTo(contentView.safeAreaLayoutGuide).offset(10)
                 make.left.equalTo(factImageView.snp.right).offset(10)
                 make.height.greaterThanOrEqualTo(factImageView)
-                make.bottom.equalTo(contentView.safeAreaLayoutGuide).offset(-10)//.priority(.high)
+                make.bottom.equalTo(contentView.safeAreaLayoutGuide).offset(-10)
                 make.right.equalTo(contentView.safeAreaLayoutGuide).offset(-10)
             } else {
                 make.top.equalTo(contentView).offset(10)
                 make.left.equalTo(factImageView.snp.right).offset(10)
                 make.height.greaterThanOrEqualTo(factImageView)
-                make.bottom.equalTo(contentView).offset(-10)//.priority(.high)
+                make.bottom.equalTo(contentView).offset(-10)
                 make.right.equalTo(contentView).offset(-10)
             }
         }
     }
-    
-    
-    
     
     func loadCell( with fact:Fact) {
         if let title = fact.title {
