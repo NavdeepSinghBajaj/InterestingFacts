@@ -46,7 +46,6 @@ class APIClient {
                 } else {
                     completion(false,nil)
                 }
-                
             }
         }
     }

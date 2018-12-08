@@ -16,6 +16,8 @@ struct Constants {
     
     struct FileName {
         static let factsJSON = "facts.json"
+        static let localFactJson = "facts_sample"
+        static let jsonExtension = "json"
     }
     
     struct CollectionViewCell {
