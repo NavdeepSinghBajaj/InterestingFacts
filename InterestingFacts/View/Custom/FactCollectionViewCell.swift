@@ -9,8 +9,15 @@
 import UIKit
 import SnapKit
 
+protocol FactCellDelegate: class {
+    func refreshLayout()
+}
+
+
 class FactCollectionViewCell: UICollectionViewCell {
     // MARK:-
+    let padding = 10.0
+    weak var delegate: FactCellDelegate?
     
     lazy var width: NSLayoutConstraint = {
         let width = contentView.widthAnchor.constraint(equalToConstant: bounds.size.width)
@@ -57,7 +64,7 @@ class FactCollectionViewCell: UICollectionViewCell {
     let cardView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-        view.layer.cornerRadius = 10
+        view.layer.cornerRadius = 10.0
         view.layer.masksToBounds = false
         view.layer.shadowColor = UIColor.gray.cgColor
         view.layer.shadowOffset = CGSize(width: 0, height: 5)
@@ -102,15 +109,15 @@ class FactCollectionViewCell: UICollectionViewCell {
         cardView.translatesAutoresizingMaskIntoConstraints = false
         cardView.snp.makeConstraints { (make) in
             if #available(iOS 11.0, *) {
-                make.top.equalTo(contentView.safeAreaLayoutGuide).offset(10)
-                make.left.equalTo(contentView.safeAreaLayoutGuide).offset(10)
-                make.bottom.equalTo(contentView.safeAreaLayoutGuide).offset(-10)
-                make.right.equalTo(contentView.safeAreaLayoutGuide).offset(-10)
+                make.top.equalTo(contentView.safeAreaLayoutGuide).offset(padding)
+                make.left.equalTo(contentView.safeAreaLayoutGuide).offset(padding)
+                make.bottom.equalTo(contentView.safeAreaLayoutGuide).offset(-padding)
+                make.right.equalTo(contentView.safeAreaLayoutGuide).offset(-padding)
             } else {
-                make.top.equalTo(contentView).offset(10)
-                make.left.equalTo(contentView).offset(10)
-                make.bottom.equalTo(contentView).offset(-10)
-                make.right.equalTo(contentView).offset(-10)
+                make.top.equalTo(contentView).offset(padding)
+                make.left.equalTo(contentView).offset(padding)
+                make.bottom.equalTo(contentView).offset(-padding)
+                make.right.equalTo(contentView).offset(-padding)
             }
         }
         
@@ -129,20 +136,20 @@ class FactCollectionViewCell: UICollectionViewCell {
         
         verticalStackView.snp.makeConstraints { (make) in
             if #available(iOS 11.0, *) {
-                make.top.equalTo(cardView.safeAreaLayoutGuide).offset(10)
-                make.left.equalTo(cardView.safeAreaLayoutGuide).offset(10)
-                make.bottom.equalTo(cardView.safeAreaLayoutGuide).offset(-10)
-                make.right.equalTo(cardView.safeAreaLayoutGuide).offset(-10)
+                make.top.equalTo(cardView.safeAreaLayoutGuide).offset(padding)
+                make.left.equalTo(cardView.safeAreaLayoutGuide).offset(padding)
+                make.bottom.equalTo(cardView.safeAreaLayoutGuide).offset(-padding)
+                make.right.equalTo(cardView.safeAreaLayoutGuide).offset(-padding)
             } else {
-                make.top.equalTo(cardView).offset(10)
-                make.left.equalTo(cardView).offset(10)
-                make.bottom.equalTo(cardView).offset(-10)
-                make.right.equalTo(cardView).offset(-10)
+                make.top.equalTo(cardView).offset(padding)
+                make.left.equalTo(cardView).offset(padding)
+                make.bottom.equalTo(cardView).offset(-padding)
+                make.right.equalTo(cardView).offset(-padding)
             }
         }
     }
     
-    func loadCell( with fact:Fact) {
+    func loadCell( with fact:Fact, for collectionView: UICollectionView) {
         
         if let title = fact.title {
             self.lblTitle.text = title
@@ -157,7 +164,10 @@ class FactCollectionViewCell: UICollectionViewCell {
         }
         
         if let imageUrl = fact.imageURL {
-            self.factImageView.sd_setImage(with: imageUrl)
+            self.factImageView.sd_setImage(with: imageUrl, placeholderImage: nil
+            , options: .refreshCached) {[weak self] (image, error, cache, url) in
+                self?.delegate?.refreshLayout()
+            }
         } else {
             self.factImageView.image = nil
         }

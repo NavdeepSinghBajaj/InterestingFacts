@@ -11,14 +11,11 @@ import SDWebImage
 
 class HomeCollectionViewController: UICollectionViewController {
     // MARK:-
-    let estimatedCellHeight:CGFloat = 10
+    let estimatedCellHeight:CGFloat = 100
     var layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
     var interestingFacts: InterestingFacts? {
         didSet {
-            collectionView.reloadData()
-            collectionView.setNeedsLayout()
-            collectionView.layoutIfNeeded()
-            collectionView.collectionViewLayout.invalidateLayout()
+            resetCollectionView()
         }
     }
     
@@ -38,36 +35,49 @@ class HomeCollectionViewController: UICollectionViewController {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         layout.estimatedItemSize = CGSize(width: view.bounds.size.width, height: estimatedCellHeight)
-        layout.invalidateLayout()
         super.traitCollectionDidChange(previousTraitCollection)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        layout.estimatedItemSize = CGSize(width: view.bounds.size.width, height: estimatedCellHeight)
-        layout.invalidateLayout()
         super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: {[unowned self] ctx in
+            self.orientationChanged()
+        }, completion: { [unowned self] _ in
+            self.collectionView.reloadData()
+        })
+        
     }
     
     
     // MARK:- Custom Methods
     
-    func setupLayout() {
-        let width = UIScreen.main.bounds.size.width
-        layout.estimatedItemSize = CGSize(width: width, height: estimatedCellHeight)
+    func resetCollectionView()  {
+        DispatchQueue.main.async {
+            self.collectionView.setNeedsLayout()
+            self.collectionView.layoutIfNeeded()
+            self.collectionView.collectionViewLayout.invalidateLayout()
+            self.collectionView.reloadData()
+        }
+    }
+    
+    func orientationChanged() {
+        DispatchQueue.main.async {
+            self.collectionView.collectionViewLayout.invalidateLayout()
+            self.collectionView.layoutSubviews()
+            self.view.layoutIfNeeded()
+        }
     }
     
     func setupCollectionView() {
-        setupLayout()
+        let width = UIScreen.main.bounds.size.width
+        layout.estimatedItemSize = CGSize(width: width, height: estimatedCellHeight)
         
         collectionView?.dataSource = self
         collectionView?.register(FactCollectionViewCell.self, forCellWithReuseIdentifier: Constants.CollectionViewCell.factCell)
         collectionView?.collectionViewLayout = layout
         
         if interestingFacts != nil {
-            collectionView.reloadData()
-            collectionView.setNeedsLayout()
-            collectionView.layoutIfNeeded()
-            collectionView.collectionViewLayout.invalidateLayout()
+            resetCollectionView()
         }
     }
     
@@ -106,7 +116,7 @@ class HomeCollectionViewController: UICollectionViewController {
 
 // MARK: - UICollectionViewDataSource
 
-extension HomeCollectionViewController {
+extension HomeCollectionViewController: FactCellDelegate {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return interestingFacts?.facts.count ?? 0
     }
@@ -114,12 +124,25 @@ extension HomeCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.CollectionViewCell.factCell, for: indexPath) as! FactCollectionViewCell
+        cell.delegate = self
         
         if let fact = interestingFacts?.facts[indexPath.row] {
-            cell.loadCell(with: fact)
+            cell.loadCell(with: fact, for: collectionView)
         }
         
         return cell
+    }
+    
+    func refreshLayout() {
+        // TODO:- Need to fix crash while adjusting cells height
+        
+//        DispatchQueue.main.async {
+//            UIView.animate(withDuration: 0.3, animations: {[weak self] in
+//                collectionView.collectionViewLayout.invalidateLayout()
+//            }) { _ in
+//             self.collectionView.reloadData()
+//            }
+//        }
     }
     
 }
