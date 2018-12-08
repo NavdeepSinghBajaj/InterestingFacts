@@ -149,7 +149,7 @@ class FactCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func loadCell( with fact:Fact, for collectionView: UICollectionView) {
+    func loadCell( with fact:Fact) {
         
         if let title = fact.title {
             self.lblTitle.text = title
@@ -166,15 +166,15 @@ class FactCollectionViewCell: UICollectionViewCell {
         if let imageUrl = fact.imageURL {
             self.factImageView.sd_setImage(with: imageUrl, placeholderImage: nil
             , options: .refreshCached) {[weak self] (image, error, cache, url) in
-                self?.delegate?.refreshLayout()
+                if (error != nil && image != nil) {
+                    self?.delegate?.refreshLayout()
+                }
             }
+
         } else {
             self.factImageView.image = nil
         }
-        
-        self.contentView.layoutIfNeeded()
-        self.contentView.layoutSubviews()
-        self.contentView.setNeedsDisplay()
+
         self.setNeedsDisplay()
         
     }

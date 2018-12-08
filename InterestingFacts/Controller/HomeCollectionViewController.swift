@@ -42,8 +42,8 @@ class HomeCollectionViewController: UICollectionViewController {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: {[unowned self] ctx in
             self.orientationChanged()
-        }, completion: { [unowned self] _ in
-            self.collectionView.reloadData()
+            }, completion: { [unowned self] _ in
+                self.collectionView.reloadData()
         })
         
     }
@@ -53,10 +53,9 @@ class HomeCollectionViewController: UICollectionViewController {
     
     func resetCollectionView()  {
         DispatchQueue.main.async {
-            self.collectionView.setNeedsLayout()
-            self.collectionView.layoutIfNeeded()
-            self.collectionView.collectionViewLayout.invalidateLayout()
             self.collectionView.reloadData()
+            self.collectionView.collectionViewLayout.invalidateLayout()
+            
         }
     }
     
@@ -76,9 +75,6 @@ class HomeCollectionViewController: UICollectionViewController {
         collectionView?.register(FactCollectionViewCell.self, forCellWithReuseIdentifier: Constants.CollectionViewCell.factCell)
         collectionView?.collectionViewLayout = layout
         
-        if interestingFacts != nil {
-            resetCollectionView()
-        }
     }
     
     @IBAction func refresh(_ sender: Any) {
@@ -127,22 +123,14 @@ extension HomeCollectionViewController: FactCellDelegate {
         cell.delegate = self
         
         if let fact = interestingFacts?.facts[indexPath.row] {
-            cell.loadCell(with: fact, for: collectionView)
+            cell.loadCell(with: fact)
         }
         
         return cell
     }
     
     func refreshLayout() {
-        // TODO:- Need to fix crash while adjusting cells height
-        
-//        DispatchQueue.main.async {
-//            UIView.animate(withDuration: 0.3, animations: {[weak self] in
-//                collectionView.collectionViewLayout.invalidateLayout()
-//            }) { _ in
-//             self.collectionView.reloadData()
-//            }
-//        }
+        collectionView.collectionViewLayout.invalidateLayout()
     }
     
 }
