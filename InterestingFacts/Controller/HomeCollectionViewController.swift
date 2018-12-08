@@ -26,9 +26,9 @@ class HomeCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchFactsFromServer()
-        setupLayout()
+        
         setupCollectionView()
+        fetchFactsFromServer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,6 +57,7 @@ class HomeCollectionViewController: UICollectionViewController {
     }
     
     func setupCollectionView() {
+        setupLayout()
         
         collectionView?.dataSource = self
         collectionView?.register(FactCollectionViewCell.self, forCellWithReuseIdentifier: Constants.CollectionViewCell.factCell)
@@ -76,16 +77,17 @@ class HomeCollectionViewController: UICollectionViewController {
     
     func fetchFactsFromServer() {
         if APIClient.isConnectedToInternet() {
-            showProgressView()
+            showProgressViewWith(message: Constants.Message.pleaseWait)
             DispatchQueue.global().async {
                 APIClient.getFactsJSON {[weak self] (status, result) in
-                    hideProgressView()
                     if status {
-                       // got data
+                        // got data
                         self?.interestingFacts = result
                         self?.title = self?.interestingFacts?.title
+                        hideProgressView()
                     } else {
                         // no data
+                        hideProgressView()
                         self?.alert(message: Constants.Message.somethingWentWrong, buttons: [Constants.Button.showLocalData, Constants.Button.ok], handler: { (action) in
                             if action.title == Constants.Button.showLocalData {
                                 self?.interestingFacts =  loadLocalJson() 
@@ -100,8 +102,11 @@ class HomeCollectionViewController: UICollectionViewController {
         }
     }
     
-    // MARK: - UICollectionViewDataSource
-    
+}
+
+// MARK: - UICollectionViewDataSource
+
+extension HomeCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return interestingFacts?.facts.count ?? 0
     }
@@ -114,12 +119,7 @@ class HomeCollectionViewController: UICollectionViewController {
             cell.loadCell(with: fact)
         }
         
-        cell.layoutIfNeeded()
-        cell.layoutSubviews()
-        
         return cell
     }
-    
-    
     
 }
