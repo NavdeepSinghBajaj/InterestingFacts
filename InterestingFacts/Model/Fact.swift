@@ -35,11 +35,12 @@ func loadLocalJson() -> InterestingFacts? {
     if let url = Bundle.main.url(forResource: Constants.FileName.localFactJson, withExtension: Constants.FileName.jsonExtension) {
         do {
             let data = try Data(contentsOf: url)
-            let decoder = JSONDecoder()
-            
-            let jsonData = try decoder.decode(InterestingFacts.self, from: data)
-            return jsonData
-            
+            let stringValue = String(data: data, encoding: .ascii)
+            if let errorFreeData = stringValue?.data(using: String.Encoding.utf8) {
+                let decoder = JSONDecoder()
+                let jsonData = try decoder.decode(InterestingFacts.self, from: errorFreeData)
+                return jsonData
+            }
         } catch {
             print("error:\(error)")
         }
@@ -52,11 +53,12 @@ func loadFactsJson(from url: URL?) -> InterestingFacts? {
     if let url = url {
         do {
             let data = try Data(contentsOf: url)
-            let decoder = JSONDecoder()
-            
-            let jsonData = try decoder.decode(InterestingFacts.self, from: data)
-            return jsonData
-            
+            let stringValue = String(data: data, encoding: .ascii)
+            if let errorFreeData = stringValue?.data(using: String.Encoding.utf8) {
+                let decoder = JSONDecoder()
+                let jsonData = try decoder.decode(InterestingFacts.self, from: errorFreeData)
+                return jsonData
+            }
         } catch {
             print("error:\(error)")
         }

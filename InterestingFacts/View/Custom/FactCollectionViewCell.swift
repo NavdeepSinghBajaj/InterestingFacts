@@ -154,13 +154,13 @@ class FactCollectionViewCell: UICollectionViewCell {
         if let title = fact.title {
             self.lblTitle.text = title
         } else {
-            self.lblTitle.text = ""
+            self.lblTitle.text = Constants.Message.noData
         }
         
         if let details = fact.detail {
             self.lblDescription.text = details
         } else {
-            self.lblDescription.text = ""
+            self.lblDescription.text = Constants.Message.noData
         }
         
         if let imageUrl = fact.imageURL {
@@ -176,6 +176,7 @@ class FactCollectionViewCell: UICollectionViewCell {
         }
 
         self.setNeedsDisplay()
+        self.layoutIfNeeded()
         
     }
     

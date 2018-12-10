@@ -24,7 +24,7 @@ class HomeCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupCollectionView()
+        setupUI()
         fetchFactsFromServer()
     }
     
@@ -65,6 +65,13 @@ class HomeCollectionViewController: UICollectionViewController {
             self.collectionView.layoutSubviews()
             self.view.layoutIfNeeded()
         }
+    }
+    
+    func setupUI() {
+        let btnRefresh =  UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refresh(_:)))
+        self.navigationItem.rightBarButtonItem = btnRefresh
+        
+        setupCollectionView()
     }
     
     func setupCollectionView() {
