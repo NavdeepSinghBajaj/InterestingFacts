@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		06BEE2D725B82EFB302614CF /* Pods_InterestingFactsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF451CD0DEFD7C090227B75D /* Pods_InterestingFactsTests.framework */; };
 		CBD2F1BFC5ADDAA458A54DE8 /* Pods_InterestingFacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D4EF5AB57D79E36961D7FA9 /* Pods_InterestingFacts.framework */; };
+		F101E36721BEEC9D00ED5B93 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F101E36621BEEC9D00ED5B93 /* HomeViewModel.swift */; };
+		F101E36921BEECDC00ED5B93 /* DynamicValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F101E36821BEECDC00ED5B93 /* DynamicValue.swift */; };
 		F139C6A321B957780037C4DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139C6A221B957780037C4DD /* AppDelegate.swift */; };
 		F139C6AA21B957880037C4DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F139C6A921B957880037C4DD /* Assets.xcassets */; };
 		F139C6AD21B957890037C4DD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F139C6AB21B957890037C4DD /* LaunchScreen.storyboard */; };
@@ -39,6 +41,8 @@
 		7FA064370A2FBD5A1E1046A9 /* Pods-InterestingFacts.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InterestingFacts.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InterestingFacts/Pods-InterestingFacts.debug.xcconfig"; sourceTree = "<group>"; };
 		A155588EC10864AD4BBFB38F /* Pods-InterestingFacts.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InterestingFacts.release.xcconfig"; path = "Pods/Target Support Files/Pods-InterestingFacts/Pods-InterestingFacts.release.xcconfig"; sourceTree = "<group>"; };
 		CF451CD0DEFD7C090227B75D /* Pods_InterestingFactsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InterestingFactsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F101E36621BEEC9D00ED5B93 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		F101E36821BEECDC00ED5B93 /* DynamicValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicValue.swift; sourceTree = "<group>"; };
 		F139C69F21B957780037C4DD /* InterestingFacts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InterestingFacts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F139C6A221B957780037C4DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F139C6A921B957880037C4DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -98,6 +102,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		F101E36521BEEC6F00ED5B93 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				F101E36621BEEC9D00ED5B93 /* HomeViewModel.swift */,
+				F101E36821BEECDC00ED5B93 /* DynamicValue.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		F139C69621B957780037C4DD = {
 			isa = PBXGroup;
 			children = (
@@ -128,6 +141,7 @@
 				F139C6C521B964C40037C4DD /* Define */,
 				F139C6C221B964900037C4DD /* Model */,
 				F139C6C321B964990037C4DD /* View */,
+				F101E36521BEEC6F00ED5B93 /* ViewModel */,
 				F139C6C421B964A30037C4DD /* Controller */,
 			);
 			path = InterestingFacts;
@@ -410,6 +424,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F139C6A321B957780037C4DD /* AppDelegate.swift in Sources */,
+				F101E36921BEECDC00ED5B93 /* DynamicValue.swift in Sources */,
+				F101E36721BEEC9D00ED5B93 /* HomeViewModel.swift in Sources */,
 				F139C6E421BA478B0037C4DD /* Fact.swift in Sources */,
 				F139C6DA21B97B100037C4DD /* HomeCollectionViewController.swift in Sources */,
 				F139C6C721B964D70037C4DD /* Constants.swift in Sources */,

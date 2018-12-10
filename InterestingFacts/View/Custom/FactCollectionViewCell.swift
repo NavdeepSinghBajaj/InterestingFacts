@@ -163,17 +163,17 @@ class FactCollectionViewCell: UICollectionViewCell {
             self.lblDescription.text = Constants.Message.noData
         }
         
-        if let imageUrl = fact.imageURL {
-            self.factImageView.sd_setImage(with: imageUrl, placeholderImage: nil
-            , options: .refreshCached) {[weak self] (image, error, cache, url) in
-                if (error != nil && image != nil) {
-                    self?.delegate?.refreshLayout()
-                }
-            }
-
-        } else {
+//        if let imageUrl = fact.imageURL {
+//            self.factImageView.sd_setImage(with: imageUrl, placeholderImage: nil
+//            , options: .refreshCached) {[weak self] (image, error, cache, url) in
+//                if (error != nil && image != nil) {
+//                    self?.delegate?.refreshLayout()
+//                }
+//            }
+//
+//        } else {
             self.factImageView.image = nil
-        }
+//        }
 
         self.setNeedsDisplay()
         self.layoutIfNeeded()

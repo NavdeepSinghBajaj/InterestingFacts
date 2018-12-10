@@ -11,12 +11,18 @@ import Foundation
 
 struct InterestingFacts: Decodable {
     let title: String?
-    let facts: [Fact]
+    let facts: [Fact]?
     
     enum CodingKeys : String, CodingKey {
         case title
         case facts = "rows"
     }
+    
+    init() {
+        title = nil
+        facts = nil
+    }
+    
 }
 
 struct Fact: Decodable {
@@ -28,6 +34,12 @@ struct Fact: Decodable {
         case title
         case detail = "description"
         case imageURL = "imageHref"
+    }
+    
+    init() {
+        title = nil
+        detail = nil
+        imageURL = nil
     }
 }
 

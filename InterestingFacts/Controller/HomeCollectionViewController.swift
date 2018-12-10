@@ -11,13 +11,9 @@ import SDWebImage
 
 class HomeCollectionViewController: UICollectionViewController {
     // MARK:-
-    let estimatedCellHeight:CGFloat = 100
-    var layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-    var interestingFacts: InterestingFacts? {
-        didSet {
-            resetCollectionView()
-        }
-    }
+    
+    fileprivate var homeViewModel: HomeViewModel = HomeViewModel()
+    
     
     // MARK:-
     
@@ -25,16 +21,16 @@ class HomeCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         
         setupUI()
-        fetchFactsFromServer()
+        fillUI()
+        fetchData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
     
-    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        layout.estimatedItemSize = CGSize(width: view.bounds.size.width, height: estimatedCellHeight)
+        homeViewModel.layout.estimatedItemSize = CGSize(width: view.bounds.size.width, height: homeViewModel.estimatedCellHeight)
         super.traitCollectionDidChange(previousTraitCollection)
     }
     
@@ -43,19 +39,23 @@ class HomeCollectionViewController: UICollectionViewController {
         coordinator.animate(alongsideTransition: {[unowned self] ctx in
             self.orientationChanged()
             }, completion: { [unowned self] _ in
-                self.collectionView.reloadData()
+                //self.collectionView.reloadData()
         })
-        
     }
     
     
     // MARK:- Custom Methods
+    func fillUI()  {
+        homeViewModel.interestingFacts?.bindAndFire({[weak self] (interestingFacts) in
+            self?.title = interestingFacts.title
+            self?.reloadCollectionView()
+        })
+    }
     
-    func resetCollectionView()  {
+    func reloadCollectionView()  {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
             self.collectionView.collectionViewLayout.invalidateLayout()
-            
         }
     }
     
@@ -76,44 +76,29 @@ class HomeCollectionViewController: UICollectionViewController {
     
     func setupCollectionView() {
         let width = UIScreen.main.bounds.size.width
-        layout.estimatedItemSize = CGSize(width: width, height: estimatedCellHeight)
+        homeViewModel.layout.estimatedItemSize = CGSize(width: width, height: homeViewModel.estimatedCellHeight)
         
         collectionView?.dataSource = self
         collectionView?.register(FactCollectionViewCell.self, forCellWithReuseIdentifier: Constants.CollectionViewCell.factCell)
-        collectionView?.collectionViewLayout = layout
+        collectionView?.collectionViewLayout = homeViewModel.layout
         
     }
     
-    @IBAction func refresh(_ sender: Any) {
-        fetchFactsFromServer()
-    }
-    
-    func fetchFactsFromServer() {
-        if APIClient.isConnectedToInternet() {
-            showProgressViewWith(message: Constants.Message.pleaseWait)
-            DispatchQueue.global().async {
-                APIClient.getFactsJSON {[weak self] (status, result) in
-                    if status {
-                        // got data
-                        self?.interestingFacts = result
-                        self?.title = self?.interestingFacts?.title
-                        hideProgressView()
-                    } else {
-                        // no data
-                        hideProgressView()
-                        self?.alert(message: Constants.Message.somethingWentWrong, buttons: [Constants.Button.showLocalData, Constants.Button.ok], handler: { (action) in
-                            if action.title == Constants.Button.showLocalData {
-                                self?.interestingFacts =  loadLocalJson() 
-                                self?.title = self?.interestingFacts?.title
-                            }
-                        })
-                    }
-                }
-            }
-        } else {
-            self.alert(error: Constants.Message.noInternet)
+    func fetchData() {
+        showProgressViewWith(message: Constants.Message.pleaseWait)
+        homeViewModel.fetchFactsFromServer(onSuccess: {
+            hideProgressView()
+        }) { [weak self] (errorMessage) in
+            hideProgressView()
+            self?.alert(error: errorMessage ?? "")
         }
     }
+    
+    @IBAction func refresh(_ sender: Any) {
+        fetchData()
+    }
+    
+    
     
 }
 
@@ -121,7 +106,7 @@ class HomeCollectionViewController: UICollectionViewController {
 
 extension HomeCollectionViewController: FactCellDelegate {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return interestingFacts?.facts.count ?? 0
+        return homeViewModel.getFactsCount()
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -129,7 +114,7 @@ extension HomeCollectionViewController: FactCellDelegate {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.CollectionViewCell.factCell, for: indexPath) as! FactCollectionViewCell
         cell.delegate = self
         
-        if let fact = interestingFacts?.facts[indexPath.row] {
+        if let fact = homeViewModel.interestingFacts?.value.facts![indexPath.row] {
             cell.loadCell(with: fact)
         }
         

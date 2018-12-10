@@ -43,7 +43,7 @@ struct Constants {
     struct Message {
         static let noInternet = "Internet not available, please try again later."
         static let noData = "No information available."
-        static let somethingWentWrong = "Something went wrong while parsing json file downloaded from server. Please try again or show data from local json file."
+        static let somethingWentWrong = "Something went wrong while reading json file downloaded from server. Please try again."
         static let pleaseWait = "Fetching data..."
     }
     
