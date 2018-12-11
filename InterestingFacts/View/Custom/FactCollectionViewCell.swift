@@ -18,6 +18,7 @@ class FactCollectionViewCell: UICollectionViewCell {
     // MARK:-
     let padding = 10.0
     weak var delegate: FactCellDelegate?
+    static let sizingCell = FactCollectionViewCell()
     
     lazy var width: NSLayoutConstraint = {
         let width = contentView.widthAnchor.constraint(equalToConstant: bounds.size.width)
@@ -74,6 +75,7 @@ class FactCollectionViewCell: UICollectionViewCell {
     
     
     // MARK: -
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -163,21 +165,19 @@ class FactCollectionViewCell: UICollectionViewCell {
             self.lblDescription.text = Constants.Message.noData
         }
         
-//        if let imageUrl = fact.imageURL {
-//            self.factImageView.sd_setImage(with: imageUrl, placeholderImage: nil
-//            , options: .refreshCached) {[weak self] (image, error, cache, url) in
-//                if (error != nil && image != nil) {
-//                    self?.delegate?.refreshLayout()
-//                }
-//            }
-//
-//        } else {
+        if let imageUrl = fact.imageURL {
+            self.factImageView.sd_setImage(with: imageUrl, placeholderImage: nil
+            , options: .refreshCached) {[weak self] (image, error, cache, url) in
+                if (error != nil && image != nil) {
+                    self?.delegate?.refreshLayout()
+                }
+            }
+        } else {
             self.factImageView.image = nil
-//        }
-
+        }
+        
         self.setNeedsDisplay()
         self.layoutIfNeeded()
         
     }
-    
 }

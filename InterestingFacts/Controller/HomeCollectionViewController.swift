@@ -38,13 +38,12 @@ class HomeCollectionViewController: UICollectionViewController {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: {[unowned self] ctx in
             self.orientationChanged()
-            }, completion: { [unowned self] _ in
-                //self.collectionView.reloadData()
-        })
+            }, completion: {  _ in })
     }
     
     
     // MARK:- Custom Methods
+
     func fillUI()  {
         homeViewModel.interestingFacts?.bindAndFire({[weak self] (interestingFacts) in
             self?.title = interestingFacts.title
@@ -94,17 +93,15 @@ class HomeCollectionViewController: UICollectionViewController {
         }
     }
     
-    @IBAction func refresh(_ sender: Any) {
+    @objc func refresh(_ sender: Any) {
         fetchData()
     }
-    
-    
     
 }
 
 // MARK: - UICollectionViewDataSource
 
-extension HomeCollectionViewController: FactCellDelegate {
+extension HomeCollectionViewController: FactCellDelegate, UICollectionViewDelegateFlowLayout {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return homeViewModel.getFactsCount()
     }
@@ -121,8 +118,26 @@ extension HomeCollectionViewController: FactCellDelegate {
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if let fact = homeViewModel.interestingFacts?.value.facts![indexPath.row] {
+            let sizingCell = FactCollectionViewCell.sizingCell
+            sizingCell.prepareForReuse()
+            sizingCell.loadCell(with: fact)
+            sizingCell.setNeedsLayout()
+            sizingCell.layoutIfNeeded()
+            
+            var size = sizingCell.contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize, withHorizontalFittingPriority: UILayoutPriority.defaultHigh, verticalFittingPriority: UILayoutPriority.defaultLow)
+            
+            size.width = UIScreen.main.bounds.size.width
+            return size
+        }
+        return CGSize.zero
+    }
+    
     func refreshLayout() {
-        collectionView.collectionViewLayout.invalidateLayout()
+        DispatchQueue.main.async {
+            self.collectionView.collectionViewLayout.invalidateLayout()
+        }
     }
     
 }
