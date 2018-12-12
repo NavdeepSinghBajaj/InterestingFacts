@@ -11,33 +11,24 @@ import XCTest
 
 class FactTests: XCTestCase {
     
-    var validJson: String!
+    var testBundle: Bundle!
     
     override func setUp() {
         super.setUp()
-        validJson = """
-        {
-        "title": "About Canada",
-        "rows": [
-        {
-        "title": "Beavers",
-        "description": "Beavers are second only to humans in their ability to manipulate and change their environment. They can measure up to 1.3 metres long. A group of beavers is called a colony",
-        "imageHref": "http://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/American_Beaver.jpg/220px-American_Beaver.jpg"
-        }]
-        }
-        """
+        testBundle = Bundle(for: type(of: self))
     }
     
     override func tearDown() {
-        validJson = nil
+        testBundle = nil
     }
     
     func testLoadJsonFromLocalPath() {
         // 1. Given
-        let localJsonUrl = Bundle.main.url(forResource: Constants.FileName.localFactJson, withExtension: Constants.FileName.jsonExtension)
+        let localJsonUrl = testBundle.url(forResource: TestConstants.FileName.localFactJson, withExtension: TestConstants.FileName.jsonExtension)
+        XCTAssertNotNil(localJsonUrl)
         
         // 2. When
-        let testInterestingFacts = loadFactsJson(from: localJsonUrl)
+        let testInterestingFacts = loadLocalJson(from: localJsonUrl)
         
         // 3. Then
         XCTAssertNotNil(testInterestingFacts)
@@ -45,65 +36,101 @@ class FactTests: XCTestCase {
     
     func testParseValidJson() {
         // 1. Given
-        let validJsonString = self.validJson!
+        let validJsonURL = testBundle.url(forResource: TestConstants.FileName.validJson, withExtension: TestConstants.FileName.jsonExtension)
+        XCTAssertNotNil(validJsonURL)
         
         // 2. When
-        let data = validJsonString.data(using: .utf8)!
-        let testInterestingFacts = try? JSONDecoder().decode(InterestingFacts.self, from: data)
+        let testInterestingFacts = loadLocalJson(from: validJsonURL)
         
         // 3. Then
         XCTAssertNotNil(testInterestingFacts)
     }
     
+    func testParseInvalidJson() {
+        // 1. Given
+        let invalidJsonURL = testBundle.url(forResource: TestConstants.FileName.invalidJson, withExtension: TestConstants.FileName.jsonExtension)
+        XCTAssertNotNil(invalidJsonURL)
+        
+        // 2. When
+        let testInterestingFacts = loadLocalJson(from: invalidJsonURL)
+        
+        // 3. Then
+        XCTAssertNil(testInterestingFacts)
+    }
+    
+    
     func testValidJsonForRootTitle() {
         // 1. Given
-        let validJsonString = self.validJson!
+        let validJsonURL = testBundle.url(forResource: TestConstants.FileName.validJson, withExtension: TestConstants.FileName.jsonExtension)
+        XCTAssertNotNil(validJsonURL)
         
-        let data = validJsonString.data(using: .utf8)!
         // 2. When
-        let testInterestingFacts = try? JSONDecoder().decode(InterestingFacts.self, from: data)
+        let testInterestingFacts = loadLocalJson(from: validJsonURL)
+        XCTAssertNotNil(testInterestingFacts)
         
         // 3. Then
         XCTAssertTrue((testInterestingFacts?.title == "About Canada"))
     }
     
-    func testValidJsonForFactTitle() {
+    func testValidJsonForRootNoTitle() {
         // 1. Given
-        let validJsonString = self.validJson!
+        let validJsonURL = testBundle.url(forResource: TestConstants.FileName.noRootTitleJson, withExtension: TestConstants.FileName.jsonExtension)
+        XCTAssertNotNil(validJsonURL)
         
         // 2. When
-        let data = validJsonString.data(using: .utf8)!
-        let testInterestingFacts = try? JSONDecoder().decode(InterestingFacts.self, from: data)
+        let testInterestingFacts = loadLocalJson(from: validJsonURL)
+        XCTAssertNotNil(testInterestingFacts)
         
         // 3. Then
-        let fact = testInterestingFacts?.facts.first!
+        XCTAssertNil(testInterestingFacts?.title)
+    }
+    
+    func testValidJsonForFactData() {
+        // 1. Given
+        let validJsonURL = testBundle.url(forResource: TestConstants.FileName.validJson, withExtension: TestConstants.FileName.jsonExtension)
+        XCTAssertNotNil(validJsonURL)
+        
+        // 2. When
+        let testInterestingFacts = loadLocalJson(from: validJsonURL)
+        XCTAssertNotNil(testInterestingFacts)
+        
+        // 3. Then
+        let fact = testInterestingFacts?.facts?.first!
+        XCTAssertNotNil(fact)
         XCTAssertTrue((fact?.title == "Beavers"))
-        
+        XCTAssertTrue((fact?.detail == "Beavers are second only to humans in their ability to manipulate and change their environment. They can measure up to 1.3 metres long. A group of beavers is called a colony"))
+        XCTAssertTrue((fact?.imageURL == URL(string: "http://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/American_Beaver.jpg/220px-American_Beaver.jpg") ))
     }
     
-    func testParseInValidJson() {
+    func testValidJsonForFactNoData() {
         // 1. Given
-        let invalidJson = """
-        {
-        "Heading": "About Canada",
-        "facts": [
-        {
-        "label": "Beavers",
-        "desc": "Beavers are second only to humans in their ability to manipulate and change their environment. They can measure up to 1.3 metres long. A group of beavers is called a colony",
-        "image": "http://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/American_Beaver.jpg/220px-American_Beaver.jpg"
-        }
-        }
-        """
+        let validJsonURL = testBundle.url(forResource: TestConstants.FileName.noFactDataJson, withExtension: TestConstants.FileName.jsonExtension)
+        XCTAssertNotNil(validJsonURL)
         
         // 2. When
-        let data = invalidJson.data(using: .utf8)!
-        let testInterestingFacts = try? JSONDecoder().decode(InterestingFacts.self, from: data)
+        let testInterestingFacts = loadLocalJson(from: validJsonURL)
+        XCTAssertNotNil(testInterestingFacts)
         
         // 3. Then
-        XCTAssertNil(testInterestingFacts)
-        
+        let fact = testInterestingFacts?.facts?.first!
+        XCTAssertNotNil(fact)
+        XCTAssertNil(fact?.title)
+        XCTAssertNil(fact?.detail)
+        XCTAssertNil(fact?.imageURL)
     }
     
+    func testValidJsonForNoFacts() {
+        // 1. Given
+        let validJsonURL = testBundle.url(forResource: TestConstants.FileName.noFactsJson, withExtension: TestConstants.FileName.jsonExtension)
+        XCTAssertNotNil(validJsonURL)
+        
+        // 2. When
+        let testInterestingFacts = loadLocalJson(from: validJsonURL)
+        XCTAssertNotNil(testInterestingFacts)
+        
+        // 3. Then
+        XCTAssertNil(testInterestingFacts?.facts)
+    }
     
     
 }
