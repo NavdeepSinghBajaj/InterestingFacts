@@ -168,7 +168,7 @@ class FactCollectionViewCell: UICollectionViewCell {
         if let imageUrl = fact.imageURL {
             self.factImageView.sd_setImage(with: imageUrl, placeholderImage: nil
             , options: .refreshCached) {[weak self] (image, error, cache, url) in
-                if (error != nil && image != nil) {
+                if (error != nil) {
                     self?.delegate?.refreshLayout()
                 }
             }
