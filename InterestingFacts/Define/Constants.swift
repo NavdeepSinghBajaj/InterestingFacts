@@ -45,6 +45,7 @@ struct Constants {
         static let noData = "No information available."
         static let somethingWentWrong = "Something went wrong while reading json file downloaded from server. Please try again."
         static let pleaseWait = "Fetching data..."
+        static let nothingToShow = "Looks like we have nothing to show here, please try refreshing the page..."
     }
     
 }

@@ -103,6 +103,11 @@ class HomeCollectionViewController: UICollectionViewController {
 
 extension HomeCollectionViewController: FactCellDelegate, UICollectionViewDelegateFlowLayout {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if (homeViewModel.getFactsCount() == 0) {
+            collectionView.setEmptyMessage(Constants.Message.nothingToShow)
+        } else {
+            collectionView.restore()
+        }
         return homeViewModel.getFactsCount()
     }
     
